@@ -31,7 +31,7 @@ const reducer = (state , action) => {
 }
 
 export const StoreProvider = ({children}) => {
-    const url = `http://localhost:5000`;
+    const url = `https://clothura-backend.onrender.com`;
     const [ isSeller , setIsSeller ] = useState(localStorage.getItem("role"));
     const [ authToken , setAuthToken ] = useState(localStorage.getItem("authToken"));
     const [ isSearchBarVisible , setIsSearchBarVisible ] = useState(true);
