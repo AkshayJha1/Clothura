@@ -1,0 +1,129 @@
+/* Apply styles to NavLink */
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #0d6efd; /* Bootstrap's primary link color */
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .nav-link:hover, .nav-link:focus {
+    color: #0a58ca; /* Bootstrap's darker shade of primary color on hover/focus */
+    text-decoration: none;
+    border-bottom: 2px solid;
+    border-bottom-color: red;
+  }
+  
+  .nav-link.active{
+    border-bottom: 0px solid;
+  }
+  
+  
+  .navbar-nav .nav-item {
+    list-style: none;
+    margin-bottom: 0;
+  }
+
+  .carousel-custom {
+    width: 100%; /* Full-width carousel */
+    height: 500px; /* Adjust height for your design */
+    max-height: 500px; /* Prevent it from being too large */
+    overflow: hidden; /* Avoid image overflow */
+  }
+  .carousel-custom img {
+    object-fit: cover; /* Maintain aspect ratio and crop excess */
+    height: 100%; /* Stretch to fit carousel height */
+  }
+  
+  
+  /* Custom styles for better UI */
+.container {
+  max-width: 960px;
+}
+.list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.btn-danger {
+  font-size: 14px;
+}
+.card {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#error-page .content {
+  max-width: 70rem;
+  text-align: center;
+}
+.content h2.header {
+  font-size: 18vw;
+  line-height: 1em;
+  animation: animate 10s ease-in-out infinite;
+  background: -webkit-repeating-linear-gradient(
+    -60deg,
+    #71b7e6,
+    var(--btn-color),
+    #b98acc,
+    #ee8176,
+    #b98acc,
+    var(--btn-color),
+    #9b59b6
+  );
+  background-size: 500%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.25);
+  position: relative;
+  -webkit-animation: animate 10s ease-in-out infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+  25% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+.content h4 {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.content .btns {
+  margin: 25px 0;
+  display: inline-flex;
+  justify-content: center;
+}
+.content .btns a {
+  display: inline-block;
+  margin: 0 10px;
+  text-decoration: none;
+  border: 2px solid var(--btn-color);
+  color: var(--btn-color);
+  font-weight: 500;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+.content .btns a:hover {
+  background: var(--btn-color);
+  color: #fff;
+}
