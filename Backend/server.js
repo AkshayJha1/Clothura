@@ -25,7 +25,7 @@ app.use('/shop',shopRoute)
 app.use('/category',categoryRoute);
 app.use('/seller',sellerRoute);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 connectDb().then(()=>{
     app.listen(PORT,()=>{
