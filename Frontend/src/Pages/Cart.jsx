@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useStore } from "../Store/store";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import {loadStripe} from '@stripe/stripe-js';
 
 const CartPage = () => {
-  const { state, dispatch , setIsSearchBarVisible , authToken} = useStore();
+  const { state, dispatch , setIsSearchBarVisible , authToken , url} = useStore();
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -18,7 +19,6 @@ const CartPage = () => {
 
   // Update quantity
   const updateQuantity = async (id, quantity , price, finalPrice , newQuantity ,index) => {
-    console.log(state);
     if (newQuantity < 1) return; // Prevent quantity from going below 1
     await dispatch({
         type: "UPDATE",
@@ -34,11 +34,53 @@ const CartPage = () => {
     0
   );
 
+  const makePayment = async () => {
+    const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-  const handleCheckout = async () => {
-    await dispatch({ type: "DROP" }); // Clear the cart
-    toast.success("Thanks For Shoping")
+    const body = {
+        products : state
+    };
+
+    const headers = {
+        "Content-Type": "application/json",
+    };
+
+    try {
+        const response = await fetch(`${url}/checkout/createPaymentIntent`, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(body),
+        });
+
+        const session = await response.json();
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id,
+        });
+
+        if (result.error) {
+            console.error("Stripe Checkout error:", result.error.message);
+        }
+    } catch (error) {
+        console.error("Error initiating payment:", error);
+    }
   };
+
+  useEffect(() => {
+
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      dispatch({ type: "DROP" }); // Clear the cart
+      toast.success("Payment Successful")
+      toast.success("Thanks For Shoping")
+    }
+
+    if (query.get("cancel")) {
+      toast.error("Payment Cancelled")
+    }
+
+  }, []);
+
 
   return (
     <div className="container py-5">
@@ -97,16 +139,18 @@ const CartPage = () => {
                   <strong>₹{totalPrice.toFixed(2)}</strong>
                 </p>
                 {
-                  authToken ? (
-                    <button className="btn btn-primary w-100" onClick={handleCheckout}>
+                  authToken ? ( <>
+                    <button className="btn btn-primary w-100" onClick={makePayment}>
                         Proceed to Checkout
                     </button>
-                  ) : (
-                    <button className="btn btn-primary w-100" onClick={()=>{
-                      navigate('/login')
-                    }} >
-                        Proceed to Checkout
-                    </button>
+                    </>
+                  ) : (<>
+                      <button className="btn btn-primary w-100" onClick={()=>{
+                        navigate('/login')
+                      }} >
+                          Proceed to Checkout
+                      </button>
+                    </>
                   )
                 }
               </div>

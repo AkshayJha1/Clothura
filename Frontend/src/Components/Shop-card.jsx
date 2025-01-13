@@ -11,8 +11,6 @@ export const ShopCard = ({ product }) => {
     });    
 
     const handleAddToCart = async() => {
-        console.log("clicked");
-        console.log(state)
 
         const existingProduct = state.find(item => item.id === product._id);
 

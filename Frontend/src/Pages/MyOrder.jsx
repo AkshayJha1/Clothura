@@ -1,15 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStore } from "../Store/store";
 import { toast } from "react-toastify";
 
 export const MyOrder = () => {
-  const { setIsSearchBarVisible } = useStore();
-  const orders = (JSON.parse(localStorage.getItem("order")) || []);
+  const { setIsSearchBarVisible , url , authToken } = useStore();
+  const [ orders , setOrders ] = useState([]);
 
   useEffect(()=>{
     setIsSearchBarVisible(false);
+    FetchingUsersOrder();
   },[])
   
+  const FetchingUsersOrder = async () => {
+    try {
+      const response = await fetch(`${url}/myorders/fetch`,{
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+        },
+        body : JSON.stringify({ "token" : authToken}),
+      })
+    
+      const res_data = await response.json()
+
+      if(response.ok){
+        setOrders(res_data.myOrdersExist.Orderdproducts.reverse());
+        return
+      }
+
+    } catch (error) {
+      console.log("error in myOrders " , error)
+    }
+  }
+
   return (
     <div className="container py-5">
       <h1 className="mb-4">My Orders</h1>
@@ -27,7 +50,13 @@ export const MyOrder = () => {
                     <h5 className="mb-1">{order.name}</h5>
                     <p className="mb-0">
                       Price: ₹{order.price} x {order.quantity} = ₹
-                      {(order.price * order.quantity).toFixed(2)}
+                      {(order.price * order.quantity).toFixed(2)}     
+                    </p>
+                    <p className="mb-1 text-muted">
+                      <strong>Order Date:</strong> {order.date}
+                    </p>
+                    <p className="mb-1 text-muted">
+                      <strong>Order Time:</strong> {order.time}
                     </p>
                   </div>
                   <span className="badge bg-primary rounded-pill">

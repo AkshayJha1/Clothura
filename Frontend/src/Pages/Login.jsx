@@ -38,7 +38,6 @@ export const LoginPage = () => {
             if(response.ok){
                 localStorage.setItem("authToken" , res_data.authToken)
                 setAuthToken(res_data.authToken);
-                console.log(res_data.role);
 
                 if(res_data.role === "seller"){
                     localStorage.setItem("role",true);

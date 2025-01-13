@@ -15,9 +15,8 @@ export const Kids = ({searchQuery ,allProducts }) => {
             (product) =>
                 product.name.toLowerCase().includes(lowercasedQuery) 
             || product.description.toLowerCase().includes(lowercasedQuery)
-        );
-        console.log("Filtered Products:", filtered);
-    
+        );    
+        
         setFilteredProducts(filtered);
     }, [searchQuery, allProducts]);
 
@@ -45,7 +44,7 @@ export const Kids = ({searchQuery ,allProducts }) => {
     }
 
     if(isLoading){
-        return <h1>Kid's Section is Loading...........</h1>
+        return <></>
     }
 
     

@@ -39,17 +39,39 @@ export const StoreProvider = ({children}) => {
         JSON.parse(localStorage.getItem("cartItems")) || []
     );
 
+    const addOrder = async (newOrder) => {
+        try {
+            const response = await fetch(`${url}/myorders/add`,{
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json",
+                },
+                body : JSON.stringify({ token : authToken , name : newOrder.name , price : newOrder.price , quantity : newOrder.quantity })
+            })
+
+        } catch (error) {
+            console.log("error in addOrder" , error);
+        }
+    }
+
+    const addAllOrders = async (orders) => {
+        for (let i = 0; i < orders.length; i++) {
+            try {
+                await addOrder(orders[i]);
+            } catch (error) {
+                console.error(`Error adding order ${orders[i].name}:`, error);
+            }
+        }
+    }
+
+    
     useEffect(()=>{
         if (state.length === 0) {
-            // Append the current cart items to the "order" local storage before clearing
-            const previousOrders = JSON.parse(localStorage.getItem("order")) || [];
             const newOrder = JSON.parse(localStorage.getItem("cartItems")) || [];
             
             if (newOrder.length > 0) {
-              const updatedOrders = [...previousOrders, ...newOrder];
-              localStorage.setItem("order", JSON.stringify(updatedOrders));
-            }
-      
+                addAllOrders(newOrder);
+            }      
             // Clear cartItems
             localStorage.removeItem("cartItems");
         }

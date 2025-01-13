@@ -21,7 +21,6 @@ export const Men = ({searchQuery ,allProducts }) => {
                 product.name.toLowerCase().includes(lowercasedQuery) 
             || product.description.toLowerCase().includes(lowercasedQuery)
         );
-        console.log("Filtered Products:", filtered);
     
         setFilteredProducts(filtered);
     }, [searchQuery, allProducts]);
@@ -45,7 +44,7 @@ export const Men = ({searchQuery ,allProducts }) => {
     }
 
     if(isLoading){
-        return <h1>Men's Section is Loading...........</h1>
+        return <></>
     }
 
     return (

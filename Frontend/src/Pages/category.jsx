@@ -28,7 +28,7 @@ export const Category = ({searchQuery ,allProducts }) => {
                 console.log(error);
             }
         } catch (error) {
-            console.log("category ke ander error",error);
+            console.log("Catching error",error);
         }
     }
 
@@ -40,8 +40,7 @@ export const Category = ({searchQuery ,allProducts }) => {
                 product.name.toLowerCase().includes(lowercasedQuery) 
             || product.description.toLowerCase().includes(lowercasedQuery)
         );
-        console.log("Filtered Products:", filtered);
-    
+            
         setFilteredProducts(filtered);
     }, [searchQuery, allProducts]);
 

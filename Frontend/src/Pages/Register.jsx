@@ -128,7 +128,6 @@ export const RegistrationPage = () => {
     const handleOTPSubmit = async (e) => {
         e.preventDefault();
         await fetchingRegisterOTPMailing(formData.email);
-        console.log(isOtpSent)
     }
 
     const handleRegisterSubmit = async (e) =>{

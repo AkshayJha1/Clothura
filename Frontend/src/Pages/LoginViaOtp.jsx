@@ -30,7 +30,6 @@ export const LoginViaOtpPage = () => {
             }else{
                 toast.error("OTP NOT SENT")
             }
-            console.log(formData.email);
         } catch (error) {
             console.log("Otp sending error ",error);
         }
@@ -38,7 +37,6 @@ export const LoginViaOtpPage = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(formData.otp);
         try {
             const response = await fetch(`${url}/users/loginViaOtp`,{
                 method : "POST",

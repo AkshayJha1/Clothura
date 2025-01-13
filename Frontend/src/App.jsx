@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 import { Navbar } from './Components/Navabar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -18,6 +20,7 @@ import { Error } from './Pages/Error';
 import { Seller } from './Pages/Seller';
 import { SellerAddProduct } from './Pages/sellerAddProduct';
 import { SelleUpdateProduct } from './Pages/SellerUpdateProduct';
+
 const App = () => {
   const { url } = useStore();
   const [ searchQuery , setSearchQuery ] = useState("");
@@ -34,14 +37,14 @@ const App = () => {
                   setAllProducts(data.response);
               }
           } catch (error) {
-              console.log("Error in fetching Products",error);
+              console.error("Error in fetching Products",error);
           }
   }
   
   useEffect(()=>{
     fetchingAllProducts();
   },[]);
-  
+
     return (
       <>
         <BrowserRouter>
@@ -58,10 +61,11 @@ const App = () => {
             </Route>
             <Route path={`/category/:category`} element = {<Category  allProducts={allProducts} searchQuery={searchQuery} />} /> 
             <Route path='/cart' element = {<Cart />} />
+            {/* <Route path='/payment' element = {<Payment />} /> */}
             <Route path='/myorder' element = {<MyOrder />} />
             <Route path='/sellersection' element = {<Seller />} /> 
             <Route path='/sellersection/addproduct' element = {<SellerAddProduct />} />
-            <Route path={`/sellersection/updateproduct`} element = {<SelleUpdateProduct />} /> 
+            <Route path={`/sellersection/updateproduct`} element = {<SelleUpdateProduct />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
