@@ -31,7 +31,7 @@ const reducer = (state , action) => {
 }
 
 export const StoreProvider = ({children}) => {
-    const url = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
+    const url = import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
     const [ isSeller , setIsSeller ] = useState(localStorage.getItem("role"));
     const [ authToken , setAuthToken ] = useState(localStorage.getItem("authToken"));
     const [ isSearchBarVisible , setIsSearchBarVisible ] = useState(true);
