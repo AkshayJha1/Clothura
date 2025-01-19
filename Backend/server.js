@@ -17,7 +17,7 @@ const myOrderRoute = require('./router/myOrder-router');
 const checkoutRoute = require('./router/checkout-router');
 
 const corsOption = {
-    origin : "http://localhost:5173",
+    origin : "https://clothura.onrender.com",
     methods : "GET ,  POST , PUT , DELETE , PUT , PATCH ,  HEAD",
     Credential : true,
 }
