@@ -34,9 +34,8 @@ const CartPage = () => {
     0
   );
 
-  VITE_STRIPE_PUBLISHABLE_KEY = "pk_test_51QdxX6CLkqtpOdHaFFNNmvZ2tTXMqkBhq0p4shkrsYGwDP38bFnr2WmB4d7QPITBt41bOXR8x0kcnmzSmJbZCPLL00IK8TPmEI"
   const makePayment = async () => {
-    const stripe = await loadStripe(VITE_STRIPE_PUBLISHABLE_KEY);
+    const stripe = await loadStripe("pk_test_51QdxX6CLkqtpOdHaFFNNmvZ2tTXMqkBhq0p4shkrsYGwDP38bFnr2WmB4d7QPITBt41bOXR8x0kcnmzSmJbZCPLL00IK8TPmEI");
 
     const body = {
         products : state
