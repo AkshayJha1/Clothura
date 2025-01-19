@@ -61,7 +61,6 @@ const App = () => {
             </Route>
             <Route path={`/category/:category`} element = {<Category  allProducts={allProducts} searchQuery={searchQuery} />} /> 
             <Route path='/cart' element = {<Cart />} />
-            {/* <Route path='/payment' element = {<Payment />} /> */}
             <Route path='/myorder' element = {<MyOrder />} />
             <Route path='/sellersection' element = {<Seller />} /> 
             <Route path='/sellersection/addproduct' element = {<SellerAddProduct />} />

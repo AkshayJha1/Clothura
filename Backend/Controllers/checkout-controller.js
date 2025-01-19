@@ -1,5 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+const dotenv = require("dotenv")
+dotenv.config();
 const createPaymentIntent = async (req, res) => {
     const { products } = req.body;
 
@@ -20,8 +21,8 @@ const createPaymentIntent = async (req, res) => {
             line_items: lineItems,
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: "http://localhost:5173/cart?success=true",
-            cancel_url: "http://localhost:5173/cart?canceled=true",
+            success_url: process.env.NODE_ENV === 'development' ? "http://localhost:5173/cart?success=true" : "https://clothura.onrender.com/cart?success=true",
+            cancel_url: process.env.NODE_ENV === 'development' ? "http://localhost:5173/cart?canceled=true" : "https://clothura.onrender.com/cart?canceled=true",
         });
 
         res.status(200).json({ id: session.id });
