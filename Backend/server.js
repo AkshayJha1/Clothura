@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require('cors');
+
+const path = require('path');
+
 const connectDb = require('./MongoDb/db');
 const usersRoute = require('./router/users-router');
 const homeRoute = require('./router/home-router');
@@ -12,11 +15,14 @@ const sellerRoute = require('./router/seller-router');
 const myOrderRoute = require('./router/myOrder-router');
 const checkoutRoute = require('./router/checkout-router');
 
-// const corsOption = {
-//     origin : "http://localhost:5174",
-//     methods : "GET ,  POST , PUT , DELETE , PUT , PATCH ,  HEAD",
-//     Credential : true,
-// }
+const corsOption = {
+    origin : "http://localhost:5173",
+    methods : "GET ,  POST , PUT , DELETE , PUT , PATCH ,  HEAD",
+    Credential : true,
+}
+
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 app.use(bodyParser.json());
 app.use(cors(corsOption)); 
@@ -31,10 +37,14 @@ app.use('/seller',sellerRoute);
 app.use('/myorders',myOrderRoute);
 app.use('/checkout',checkoutRoute);
 
-const PORT = process.env.PORT || 5000;
-const PAYPAL_API = process.env.PAYPAL_API;
-const CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
-const CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname,"../Frontend/dist")));
+
+
+    app.get("*", (req,res) => {
+        res.sendFile(path.join(__dirname, "../Frontend", "dist" , "index.html"));
+    })
+} 
 
 connectDb().then(()=>{
     app.listen(PORT,()=>{
