@@ -29,20 +29,22 @@ app.use(cors(corsOption));
 app.use(express.json());
 
 
-app.use('/users', usersRoute)
-app.use('/', homeRoute)
-app.use('/shop',shopRoute)
-app.use('/category',categoryRoute);
-app.use('/seller',sellerRoute);
-app.use('/myorders',myOrderRoute);
-app.use('/checkout',checkoutRoute);
+app.use('/api/users', usersRoute)
+app.use('/api/', homeRoute)
+app.use('/api/shop',shopRoute)
+app.use('/api/category',categoryRoute);
+app.use('/api/seller',sellerRoute);
+app.use('/api/myorders',myOrderRoute);
+app.use('/api/checkout',checkoutRoute);
 
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname,"../Frontend/dist")));
 
 
     app.get("*", (req,res) => {
-        res.sendFile(path.join(__dirname, "../Frontend", "dist" , "index.html"));
+        if(!req.path.startsWith("/api")){
+            res.sendFile(path.join(__dirname, "../Frontend", "dist" , "index.html"));
+        }
     })
 } 
 
