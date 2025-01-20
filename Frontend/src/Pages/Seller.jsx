@@ -48,15 +48,26 @@ export const Seller = () => {
 
     return (
         <>
-            <h1 className="m-5" style={{textAlign : "center"}}> YOUR PRODUCTS </h1>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", padding: "16px" }}>
+            <div className="container py-5">
+            <h1 className="mb-4" >Your Products</h1>
+            {
+                products.length === 0 ? (
+                    <div className="alert alert-info" role="alert">
+                      You have no products yet.
+                    </div>
+                ) :( 
+                 <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", padding: "16px" }}>
                 {products.map((item , index) => (
                     <SellerCard key={item._id} products={item} onProductDelete={handleProductDelete} index={index} />
                 ))}
-            </div>
+                </div>
+                )
+            }
+            
             <button className="d-flex justify-content-center align-items-center btn btn-primary" onClick={()=>{ navigate('/sellersection/addproduct') }} style={{ position: 'fixed',bottom: '20px',right: '20px',width: '80px',height: '80px',borderRadius: '50%',color: 'white',fontSize: '18px'}}>
                 ADD
             </button>
+            </div>
         </>
     )
 }

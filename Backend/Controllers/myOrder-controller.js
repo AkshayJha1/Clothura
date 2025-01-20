@@ -50,10 +50,9 @@ const gettingMyOrders = async (req,res) => {
 
         if(!myOrdersExist){
             res.status(400).json({ message : 'Not any Order History found' , myOrdersExist})
+        }else{
+            res.status(200).json({ message : "Order History Found" , myOrdersExist});
         }
-
-        res.status(200).json({ message : "Order History Found" , myOrdersExist});
-
     } catch (error) {
         res.status(500).json({ message: "An fetching error occurred.", error : error.message });    
     }

@@ -5,10 +5,11 @@ const home = async (req,res) => {
         if(!response){
             res.status(404).json({ msg : "No service found"});
             return;
+        }else{
+            res.status(200).json({response });
         }
-        res.status(200).json({response });
     } catch (error) {
-        res.status(400).send({msg:'page not found'});
+        res.status(400).json({msg:'page not found'});
     }
 }
 

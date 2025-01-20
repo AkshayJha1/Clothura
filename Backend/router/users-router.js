@@ -5,7 +5,7 @@ const {registerSchema , loginSchema } = require('../Validator/user-validator');
 const validate = require('../Middleware/validate-middleware');
 
 router.route('/registerOTPMailing').post(userController.registerOTPMailing); 
-router.route('/resgisterViaOtp').post(validate(registerSchema) , userController.resgisterViaOtp); 
+router.route('/registerViaOtp').post(validate(registerSchema) , userController.registerViaOtp); 
 router.route('/login').post( validate(loginSchema) , userController.login);
 router.route('/loginOTPMailing').post(userController.loginOTPMailing);
 router.route('/loginViaOtp').post(userController.loginViaOtp);

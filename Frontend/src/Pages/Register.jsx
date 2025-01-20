@@ -63,13 +63,14 @@ export const RegistrationPage = () => {
             }
             
         } catch (error) {
-            
+            console.log("registration otp mailing error =",error);
         }
     }
 
     const fetchingResgisterViaOtp = async (formData) => {
+        console.log(formData)
         try {
-            const response = await fetch(`${url}/users/resgisterViaOtp`,{
+            const response = await fetch(`${url}/users/registerViaOtp`,{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json",
@@ -97,7 +98,7 @@ export const RegistrationPage = () => {
 
     const fetchingResgisterAsSellerViaOtp = async (updatedFormData) => {
         try {
-            const response = await fetch(`${url}/users/resgisterViaOtp`,{
+            const response = await fetch(`${url}/users/registerViaOtp`,{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json",

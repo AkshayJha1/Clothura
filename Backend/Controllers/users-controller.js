@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
 
 
-async function sendOTP(email) {
+const sendOTP = async(email) => {
     const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
 
     // Configure Nodemailer
@@ -95,13 +95,15 @@ const registerOTPMailing = async ( req , res ) => {
     }
 }
 
-const resgisterViaOtp = async ( req , res ) => {
+const registerViaOtp = async ( req , res ) => {
     try {
-        const { name, email, phone, address, password , role , otp } = req.body;
+        const { name, email, phone, address, password, role, otp } = req.body;
+        console.log("Request Body Keys:", Object.keys(req.body));
+        console.log("Request Body:", req.body);
         if(currEmail){
             if( otp === currOtp ){
                 const UserCreated = await User.create({ name, email, phone, address, password ,role });
-                res.status(200).json({message : "Register Successful" , authToken : await UserCreated.generateAuthToken() , userId : UserCreated._id.toString() , role : UserCreated.role});
+                await res.status(200).json({message : "Register Successful" , authToken : await UserCreated.generateAuthToken() , userId : UserCreated._id.toString() , role : UserCreated.role});
                 currOtp = null;
                 currEmail = null;
             }else{
@@ -134,4 +136,4 @@ const loginViaOtp = async (req,res) => {
     }
 }
 
-module.exports = { registerOTPMailing , resgisterViaOtp ,  login , loginOTPMailing , loginViaOtp };
+module.exports = { registerOTPMailing , registerViaOtp ,  login , loginOTPMailing , loginViaOtp };
