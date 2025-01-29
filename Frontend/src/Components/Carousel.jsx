@@ -1,7 +1,11 @@
 export const Carousel = () => {
     return (
         <>
-            <div id="carouselExampleFade" class="carousel slide carousel-fade carousel-custom" data-bs-interval="1000">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade carousel-custom" data-bs-interval="1000" style={{
+                    width: "100vw", // 100% of the viewport width
+                    height: "100vh", // 100% of the viewport height (optional for full screen height)
+                    overflow: "hidden"
+                }}>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                     <img src="https://media.istockphoto.com/id/1158240566/photo/happy-black-woman-wearing-warm-clothes.jpg?s=2048x2048&w=is&k=20&c=9tBV7eXv_ElaYQxfRp7phgaPL7MYzeWvCzJmk5owR8M=" class="d-block w-100" alt="..."/>

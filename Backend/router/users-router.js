@@ -8,5 +8,6 @@ router.route('/registerOTPMailing').post(userController.registerOTPMailing);
 router.route('/registerViaOtp').post(validate(registerSchema) , userController.registerViaOtp); 
 router.route('/login').post( validate(loginSchema) , userController.login);
 router.route('/loginOTPMailing').post(userController.loginOTPMailing);
-router.route('/loginViaOtp').post(userController.loginViaOtp);
+router.route('/loginViaOtp').post(userController.loginViaOtp); 
+router.route('/currUser').post(userController.currUser);
 module.exports = router; 

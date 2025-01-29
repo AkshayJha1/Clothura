@@ -127,3 +127,25 @@
   background: var(--btn-color);
   color: #fff;
 }
+
+/* Initially hide the navbar content on the right side */
+.slide-navbar {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Hidden offscreen */
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  transition: right 0.3s ease; /* Smooth slide-in */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1050; /* Ensures it is above other content */
+}
+
+/* When the navbar is open, move it to the right */
+.slide-navbar.show {
+  right: 0;
+}
+
+.navbar-toggler-icon {
+  color: #000; /* Make the toggler icon visible */
+}

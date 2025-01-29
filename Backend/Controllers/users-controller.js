@@ -1,7 +1,7 @@
 const User = require('../models/user-model');
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
-
+const jwt = require('jsonwebtoken');
 
 const sendOTP = async(email) => {
     const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
@@ -70,7 +70,7 @@ const loginOTPMailing = async(req,res) => {
             res.status(401).json({message : "Invalid email"});
         }
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error: OTP could not be sent.' });
+        res.status(500).json({ message: 'Internal Server Error' });
         console.log(error);
     }
 }
@@ -111,7 +111,7 @@ const registerViaOtp = async ( req , res ) => {
             }
         }
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error: OTP NOT VERIFIED.' });
+        res.status(500).json({ message: 'Internal Server Error: Uanble to Register' });
     }
 }
 
@@ -126,7 +126,7 @@ const loginViaOtp = async (req,res) => {
                 currEmail = null;
             }else{
                 res.status(400).json({message : "Wrong Otp" });
-            }
+        }
         }else{
             res.status(500).json({ message: 'Internal Server Error: Invalid Email.' });
         }
@@ -136,4 +136,18 @@ const loginViaOtp = async (req,res) => {
     }
 }
 
-module.exports = { registerOTPMailing , registerViaOtp ,  login , loginOTPMailing , loginViaOtp };
+const currUser = async (req , res) => {
+    try {
+        const { token } = req.body;
+        if(!token) return res.status(200).json({ "message" : "No User loggedIn"});
+        const decoded =  jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+        res.status(200).json({ "role" : decoded.role , "email" : decoded.email});
+
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error: Unable to fetch currUser' });
+        console.log(error.message);
+    }
+}
+
+module.exports = { registerOTPMailing , registerViaOtp ,  login , loginOTPMailing , loginViaOtp , currUser };
